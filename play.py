@@ -119,7 +119,7 @@ def note2freq(x):
 
 if __name__ == '__main__':
     
-    pyautogui.PAUSE = 0
+    pyautogui.PAUSE = 0.05
     # Import the MIDI file...
     mid = MidiFile(sys.argv[1])
     if mid.type == 3:
