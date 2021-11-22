@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 from time import sleep
 import ntpath
+import pyautogui
 from pyautogui import press
 
 DEFAULT_TEMPO = 0.5
@@ -117,7 +118,8 @@ def note2freq(x):
 
 
 if __name__ == '__main__':
-
+    
+    pyautogui.PAUSE = 0
     # Import the MIDI file...
     mid = MidiFile(sys.argv[1])
     if mid.type == 3:
@@ -127,7 +129,7 @@ if __name__ == '__main__':
     """
         wait 2 seconds to switch window
     """
-    #sleep(2)
+    sleep(2)
     try:
         for msg in mid.play():
             if hasattr(msg, 'velocity'):
