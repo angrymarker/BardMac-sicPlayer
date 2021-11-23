@@ -136,7 +136,7 @@ def playMidi(filename):
 
     # wait 3 seconds to switch window
     sleep(3)
-
+    window["-STATE-"].update('Playing.')
     try:
         for msg in mid.play():
             if hasattr(msg, 'velocity'):
@@ -172,6 +172,7 @@ file_list_column = [
 image_viewer_column = [
     [sg.Text("Selected file:")],
     [sg.Text(size=(40, 1), key="-TOUT-")],
+    [sg.Text('Stopped.',  size=(40, 1), key="-STATE-")],
     [sg.Button('Play !', enable_events=True, key="-PLAY-", disabled=True)],
     [sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True)]
 ]
@@ -215,10 +216,12 @@ while True:
 
     elif event == "-PLAY-": # Play button pressed
         window["-STOP-"].update(disabled=False)
+        window["-STATE-"].update('Playing in a few seconds.')
         _thread.start_new_thread(playMidi,(filename,))
 
     elif event == "-STOP-":  # Stop button pressed
         stop = True
         window["-STOP-"].update(disabled=True)
+        window["-STATE-"].update('Stopped.')
 
 window.close()
