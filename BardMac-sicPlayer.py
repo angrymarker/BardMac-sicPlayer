@@ -146,6 +146,7 @@ def playMidi(filename):
                     press(note2freq(msg.note))
             if stop == True:
                 break
+        window["-STATE-"].update('Stopped.')
         window["-STOP-"].update(disabled=True)
     except KeyboardInterrupt:
         print('quit')
