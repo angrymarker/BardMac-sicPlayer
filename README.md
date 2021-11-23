@@ -25,9 +25,7 @@ run cmd line:
 
 Switch back to FFXIV in performance mode, and rock out
 
-It helps to have the terminal set up in automtor, as it gives you a simple means to stop the song.
-
-Playing will start after a 2 second delay. this can be updated in the play.py, under the sleep(2) function.
+Playing will start after a 3 second delay to let you switch your active window back to ff14.
 
 
 If you have issues installing python3, reddit user a5920 wrote up a guide that worked for them:
