@@ -123,6 +123,7 @@ def readFiles(f):
         if os.path.isfile(os.path.join(folder, f))
         and f.lower().endswith((".mid", ".midi"))
     ]
+    fnames.sort()
     return fnames
 
 def playMidi(filename):
