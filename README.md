@@ -54,6 +54,17 @@ To make this a standalone install py2app with "pip3 install py2app" and then run
   
 If you want to try a compiled version just download it here https://github.com/realAbitbol/BardMac-sicPlayer/releases
   
-Works on my system but I currently have no idea if it works on a system where the dependancies aren't already installed.
+Important : 
+  
+Give application accessibility permissions in
+  
+System settings > Security and privacy > Accessibility
+  
+Click the "+" on the bottom and add the application.
+
+Double check it's checked.
+  
+  
+It works on my system but I currently have no idea if it works on a system where the dependancies aren't already installed.
   
 Please let me know !
