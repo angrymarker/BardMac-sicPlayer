@@ -49,3 +49,7 @@ And python3 -m pip install pysimplegui
 And brew install python3-tkinter
   
 The last line needs homebrew which you can get here : https://brew.sh/
+  
+---
+
+To make this a standalone install py2app and then run python3 setup.py py2app
