@@ -11,6 +11,10 @@ install python module mido
 
 install python module pyautogui
 
+install pysimplegui
+
+install python3-tkinter
+
 ensure keybindings are set as per bardmusicplayer settings
 
 to run:
@@ -38,4 +42,10 @@ Type python3 <drag get-pip.py here> in terminal,
   
 Then python3 -m pip install mido 
   
-And python3 -m pip install pyautogui.
+And python3 -m pip install pyautogui
+  
+And python3 -m pip install pysimplegui
+  
+And brew install python3-tkinter
+  
+The last line needs homebrew which you can get here : https://brew.sh/
