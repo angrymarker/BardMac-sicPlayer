@@ -55,5 +55,7 @@ The last line needs homebrew which you can get here : https://brew.sh/
 To make this a standalone install py2app with "pip3 install py2app" and then run "python3 setup.py py2app"
   
 If you want to try a compiled version just download it here https://github.com/realAbitbol/BardMac-sicPlayer/releases
-Works on my system but I currently have no ida if it works on a system where the dependancies aren't already installed.
+  
+Works on my system but I currently have no idea if it works on a system where the dependancies aren't already installed.
+  
 Please let me know !
