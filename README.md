@@ -52,4 +52,4 @@ The last line needs homebrew which you can get here : https://brew.sh/
   
 ---
 
-To make this a standalone install py2app and then run python3 setup.py py2app
+To make this a standalone install py2app with "pip3 install py2app" and then run "python3 setup.py py2app"
