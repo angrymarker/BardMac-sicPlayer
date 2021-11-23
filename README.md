@@ -21,7 +21,7 @@ to run:
 open up bard perform mode in FFXIV with instrument of choice.
 
 run cmd line:
-  python3 play.py "path/To/MidiFile/song.midi" 
+  python3 BardMac-sicPlayer.py "path/To/MidiFile/song.midi" 
 
 Switch back to FFXIV in performance mode, and rock out
 
