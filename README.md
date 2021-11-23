@@ -1,5 +1,5 @@
 # BardMac-sicPlayer
-Python script that converts .midi files to .scpt files, akin to BardMusicPlayer, but for mac!
+Python script that plays .midi files akin to BardMusicPlayer, but for mac!
 
 Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings. 
 
