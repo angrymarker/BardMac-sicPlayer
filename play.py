@@ -111,7 +111,6 @@ def note2freq(x):
 
 def readFiles(f):
     folder = f
-    print(folder)
     try:
         # Get list of files in folder
         file_list = os.listdir(folder)
@@ -158,12 +157,12 @@ def playMidi(filename):
 file_list_column = [
     [
         sg.Text("Choose Songs Folder"),
-        sg.In("songs", size=(25, 1), enable_events=True, key="-FOLDER-"),
-        sg.FolderBrowse(initial_folder='songs'),
+        sg.In("", size=(25, 1), enable_events=True, key="-FOLDER-"),
+        sg.FolderBrowse(),
     ],
     [
         sg.Listbox(
-            values=readFiles('songs'), enable_events=True, size=(40, 20), key="-FILE LIST-"
+            values=[], enable_events=True, size=(40, 20), key="-FILE LIST-"
         )
     ],
 ]
@@ -208,7 +207,7 @@ while True:
             filename = os.path.join(
                 values["-FOLDER-"], values["-FILE LIST-"][0]
             )
-            window["-TOUT-"].update(filename)
+            window["-TOUT-"].update(values["-FILE LIST-"][0])
             window["-PLAY-"].update(disabled=False)
         except:
             pass
