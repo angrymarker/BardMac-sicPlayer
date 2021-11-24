@@ -1,6 +1,5 @@
 # noinspection PyProtectedMember
 from mido import MidiFile
-import datetime
 import sys
 from time import sleep
 import pyautogui
@@ -8,6 +7,8 @@ from pyautogui import press
 import PySimpleGUI as Sg
 import os.path
 import _thread
+
+debug = False
 
 
 def note2freq(x):
@@ -111,7 +112,7 @@ def note2freq(x):
     return keystroke
 
 
-def readfiles(f):
+def read_files(f):
     folder = f
     try:
         # Get list of files in folder
@@ -119,20 +120,20 @@ def readfiles(f):
     except OSError:
         file_list = []
 
-    fnames = [
+    file_names = [
         f
         for f in file_list
         if os.path.isfile(os.path.join(folder, f))
         and f.lower().endswith((".mid", ".midi"))
     ]
-    fnames.sort()
-    return fnames
+    file_names.sort()
+    return file_names
 
 
-def playmidi(midifile):
+def play_midi(midi_file):
     pyautogui.PAUSE = 0.05
     # Import the MIDI file...
-    mid = MidiFile(midifile)
+    mid = MidiFile(midi_file)
     if mid.type == 3:
         print("Unsupported type.")
         exit(3)
@@ -140,7 +141,6 @@ def playmidi(midifile):
     # wait 3 seconds to switch window
     sleep(3)
     window["-STATE-"].update('Playing.')
-    window["-PROGRESS-"].update(visible=True)
     try:
         current_time = 0
         for msg in mid.play():
@@ -148,31 +148,19 @@ def playmidi(midifile):
                 # print(msg)
                 if int(msg.velocity) > 0:
                     press(note2freq(msg.note))
-                    Sg.Print(msg.time)
-                    current_time += msg.time
-                    window["-PROGRESS-"].update_bar(current_time, mid.length)
-                    update_time(current_time, mid.length)
-                    window.refresh()
+                    if debug:
+                        Sg.Print(msg)
             if stop:
                 break
+            current_time += msg.time
+            window["-PROGRESS-"].update_bar(current_time, mid.length)
+            window.refresh()
+
         window["-STATE-"].update('Stopped.')
         window["-STOP-"].update(disabled=True)
         window["-PLAY-"].update(disabled=False)
-        window["-PROGRESS-"].update(visible=False)
-        update_time(0, 0)
     except KeyboardInterrupt:
         sys.exit()
-
-
-def update_time(cur_time, max_time):
-    if max_time > 0:
-        cur_time_delta = datetime.timedelta(seconds=cur_time)
-        max_time_delta = datetime.timedelta(seconds=max_time)
-        window['-CURTIME-'].update(str(cur_time_delta))
-        window['-MAXTIME-'].update(str(max_time_delta))
-    else:
-        window['-CURTIME-'].update('--:--')
-        window['-MAXTIME-'].update('--:--')
 
 
 # GUI
@@ -198,12 +186,13 @@ file_list_column = [
 image_viewer_column = [
     [Sg.Text("Selected file:")],
     [Sg.Text(size=(40, 1), key="-TOUT-")],
-    [Sg.Text('Stopped.', key="-STATE-"),
-     Sg.ProgressBar(0, orientation='h', key='-PROGRESS-', visible=False, size=(40, 20))],
     [
-        Sg.Button('▶', enable_events=True, key="-PLAY-", disabled=True),
-        Sg.Button('⏹️', enable_events=True, key="-STOP-", disabled=True),
-        Sg.Text('--:--', key="-CURTIME-"), Sg.Text(' / '), Sg.Text('--:--', key="-MAXTIME-")
+        Sg.Text('Stopped.', key="-STATE-"),
+        Sg.ProgressBar(0, orientation='h', key='-PROGRESS-', visible=True, size=(40, 20))
+    ],
+    [
+        Sg.Button('▶️', enable_events=True, key="-PLAY-", disabled=True),
+        Sg.Button('⏹️️️', enable_events=True, key="-STOP-", disabled=True),
     ]
 ]
 
@@ -230,7 +219,7 @@ while True:
         break
     # Folder name was filled in, make a list of files in the folder
     if event == "-FOLDER-":
-        window["-FILE LIST-"].update(readfiles(values["-FOLDER-"]))
+        window["-FILE LIST-"].update(read_files(values["-FOLDER-"]))
         window["-TOUT-"].update('')
         window["-PLAY-"].update(disabled=True)
 
@@ -249,14 +238,12 @@ while True:
             window["-PLAY-"].update(disabled=True)
             window["-STOP-"].update(disabled=False)
             window["-STATE-"].update('Playing in a few seconds.')
-            _thread.start_new_thread(playmidi, (filename,))
+            _thread.start_new_thread(play_midi, (filename,))
 
     elif event == "-STOP-":  # Stop button pressed
         stop = True
         window["-STOP-"].update(disabled=True)
         window["-PLAY-"].update(disabled=False)
         window["-STATE-"].update('Stopped.')
-        window["-PROGRESS-"].update(visible=False)
-        update_time(0, 0)
 
 window.close()
