@@ -158,7 +158,7 @@ def playMidi(filename):
 
 file_list_column = [
     [
-        sg.Text("Choose Songs Folder"),
+        sg.Text("Midi tunes folder"),
         sg.In("", size=(25, 1), enable_events=True, key="-FOLDER-"),
         sg.FolderBrowse(),
     ],
@@ -174,8 +174,10 @@ image_viewer_column = [
     [sg.Text("Selected file:")],
     [sg.Text(size=(40, 1), key="-TOUT-")],
     [sg.Text('Stopped.',  size=(40, 1), key="-STATE-")],
-    [sg.Button('Play !', enable_events=True, key="-PLAY-", disabled=True)],
-    [sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True)]
+    [
+        sg.Button('Play !', enable_events=True, key="-PLAY-", disabled=True),
+        sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
+    ]
 ]
 
 # ----- Full layout -----
