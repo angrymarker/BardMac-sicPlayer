@@ -1,12 +1,19 @@
-# noinspection PyProtectedMember
-from mido import MidiFile
 import sys
-from time import sleep
-import pyautogui
-from pyautogui import press
-import PySimpleGUI as Sg
 import os.path
 import _thread
+from time import sleep
+import mido as mi
+import pyautogui as pa
+import PySimpleGUI as Sg
+
+
+# Setup
+
+pyautogui_pause = 0  # Better don't touch it and adjust min_interval
+hold_notes = True   # Experimental but works pretty great so far
+debug = True        # Displays the midi file information as it is played
+tempo = 1.0          # only used for hold_notes mode
+min_interval = 0.05  # Minimum interval between keystrokes or minimum keys hold time
 
 
 def note2freq(x):
@@ -110,7 +117,7 @@ def note2freq(x):
     return keystroke
 
 
-def readfiles(f):
+def read_files(f):
     folder = f
     try:
         # Get list of files in folder
@@ -118,20 +125,20 @@ def readfiles(f):
     except OSError:
         file_list = []
 
-    fnames = [
+    file_names = [
         f
         for f in file_list
         if os.path.isfile(os.path.join(folder, f))
         and f.lower().endswith((".mid", ".midi"))
     ]
-    fnames.sort()
-    return fnames
+    file_names.sort()
+    return file_names
 
 
-def playmidi(midifile):
-    pyautogui.PAUSE = 0.05
+def play_midi(midi_file):
+    pa.PAUSE = pyautogui_pause
     # Import the MIDI file...
-    mid = MidiFile(midifile)
+    mid = mi.MidiFile(midi_file)
     if mid.type == 3:
         print("Unsupported type.")
         exit(3)
@@ -142,14 +149,22 @@ def playmidi(midifile):
     try:
         for msg in mid.play():
             if hasattr(msg, 'velocity'):
-                # print(msg)
-                window.refresh()
                 if int(msg.velocity) > 0:
-                    press(note2freq(msg.note))
+                    if hold_notes:
+                        pa.keyDown(note2freq(msg.note))
+                        sleep(max(msg.time, min_interval))
+                        pa.keyUp(note2freq(msg.note))
+                    else:
+                        pa.press(note2freq(msg.note))
+                        sleep(min_interval)
+                    if debug:
+                        Sg.Print(msg)
             if stop:
                 break
         window["-STATE-"].update('Stopped.')
         window["-STOP-"].update(disabled=True)
+        window["-PLAY-"].update(disabled=False)
+        window.refresh()
     except KeyboardInterrupt:
         print('quit')
         sys.exit()
@@ -207,7 +222,7 @@ while True:
         break
     # Folder name was filled in, make a list of files in the folder
     if event == "-FOLDER-":
-        window["-FILE LIST-"].update(readfiles(values["-FOLDER-"]))
+        window["-FILE LIST-"].update(read_files(values["-FOLDER-"]))
         window["-TOUT-"].update('')
         window["-PLAY-"].update(disabled=True)
 
@@ -223,13 +238,16 @@ while True:
 
     elif event == "-PLAY-":  # Play button pressed
         if filename is not None:
+            stop = False
             window["-STOP-"].update(disabled=False)
+            window["-PLAY-"].update(disabled=True)
             window["-STATE-"].update('Playing in a few seconds.')
-            _thread.start_new_thread(playmidi, (filename,))
+            _thread.start_new_thread(play_midi, (filename,))
 
     elif event == "-STOP-":  # Stop button pressed
         stop = True
         window["-STOP-"].update(disabled=True)
+        window["-PLAY-"].update(disabled=False)
         window["-STATE-"].update('Stopped.')
 
 window.close()
