@@ -1,23 +1,23 @@
-from mido import MidiFile, MetaMessage
+# noinspection PyProtectedMember
+from mido import MidiFile
 import sys
-from pathlib import Path
 from time import sleep
-import ntpath
 import pyautogui
 from pyautogui import press
-import PySimpleGUI as sg
+import PySimpleGUI as Sg
 import os.path
 import _thread
+
 
 def note2freq(x):
     """
         Convert a MIDI note into a frequency (given in Hz)
     """
     a = 440
-    b = (a/32) * (2 ** ((x-9)/12))
+    b = (a / 32) * (2 ** ((x - 9) / 12))
     b = round(b)
     keystroke = '\t\t keystroke "'
-    #NOT USED -- start
+    # NOT USED -- start
     if b == 1864:
         return 'j'
     elif b == 1760:
@@ -61,15 +61,15 @@ def note2freq(x):
     elif b == 466:
         return 'c'
     elif b == 440:
-        return'r'
+        return 'r'
     elif b == 415:
         return 'x'
     elif b == 392:
-        return  'e'
+        return 'e'
     elif b == 370:
         return 'z'
     elif b == 349:
-        return  'w'
+        return 'w'
     elif b == 330:
         return 'q'
     elif b == 311:
@@ -79,19 +79,19 @@ def note2freq(x):
     elif b == 277:
         return 'k'
     elif b == 262:
-        return  '9'
+        return '9'
     elif b == 247:
-        return  's'
+        return 's'
     elif b == 233:
-        return  '.'
+        return '.'
     elif b == 220:
-        return  'a'
+        return 'a'
     elif b == 208:
         return 'm'
     elif b == 196:
-        return  'p'
+        return 'p'
     elif b == 185:
-        return  'n'
+        return 'n'
     elif b == 175:
         return 'o'
     elif b == 165:
@@ -99,22 +99,23 @@ def note2freq(x):
     elif b == 156:
         return 'b'
     elif b == 147:
-        return  'u'
+        return 'u'
     elif b == 139:
         return 'v'
     elif b == 131:
-        return  'y'
+        return 'y'
     else:
         keystroke += ' NOT FOUND'
     keystroke += ', freq: ' + str(b)
     return keystroke
 
-def readFiles(f):
+
+def readfiles(f):
     folder = f
     try:
         # Get list of files in folder
         file_list = os.listdir(folder)
-    except:
+    except OSError:
         file_list = []
 
     fnames = [
@@ -126,10 +127,11 @@ def readFiles(f):
     fnames.sort()
     return fnames
 
-def playMidi(filename):
+
+def playmidi(midifile):
     pyautogui.PAUSE = 0.05
     # Import the MIDI file...
-    mid = MidiFile(filename)
+    mid = MidiFile(midifile)
     if mid.type == 3:
         print("Unsupported type.")
         exit(3)
@@ -140,11 +142,11 @@ def playMidi(filename):
     try:
         for msg in mid.play():
             if hasattr(msg, 'velocity'):
-                #print(msg)
+                # print(msg)
                 window.refresh()
                 if int(msg.velocity) > 0:
                     press(note2freq(msg.note))
-            if stop == True:
+            if stop:
                 break
         window["-STATE-"].update('Stopped.')
         window["-STOP-"].update(disabled=True)
@@ -152,19 +154,20 @@ def playMidi(filename):
         print('quit')
         sys.exit()
 
-## GUI
-sg.theme('System Default For Real')
+
+# GUI
+Sg.theme('System Default For Real')
 
 # First the window layout in 2 columns
 
 file_list_column = [
     [
-        sg.Text("Midi tunes folder"),
-        sg.In("", size=(25, 1), enable_events=True, key="-FOLDER-"),
-        sg.FolderBrowse(),
+        Sg.Text("Midi tunes folder"),
+        Sg.In("", size=(25, 1), enable_events=True, key="-FOLDER-"),
+        Sg.FolderBrowse(),
     ],
     [
-        sg.Listbox(
+        Sg.Listbox(
             values=[], enable_events=True, size=(40, 20), key="-FILE LIST-"
         )
     ],
@@ -172,39 +175,39 @@ file_list_column = [
 
 # For now will only show the name of the file that was chosen
 image_viewer_column = [
-    [sg.Text("Selected file:")],
-    [sg.Text(size=(40, 1), key="-TOUT-")],
-    [sg.Text('Stopped.',  size=(40, 1), key="-STATE-")],
+    [Sg.Text("Selected file:")],
+    [Sg.Text(size=(40, 1), key="-TOUT-")],
+    [Sg.Text('Stopped.', size=(40, 1), key="-STATE-")],
     [
-        sg.Button('Play !', enable_events=True, key="-PLAY-", disabled=True),
-        sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
+        Sg.Button('Play !', enable_events=True, key="-PLAY-", disabled=True),
+        Sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
     ]
 ]
 
 # ----- Full layout -----
 layout = [
     [
-        sg.Column(file_list_column),
-        sg.VSeperator(),
-        sg.Column(image_viewer_column),
+        Sg.Column(file_list_column),
+        Sg.VSeperator(),
+        Sg.Column(image_viewer_column),
     ]
 ]
 
-window = sg.Window("BardMac-sicPlayer", layout)
+window = Sg.Window("BardMac-sicPlayer", layout)
 
 # Run the Event Loop
 
 stop = False
+filename = None
 
 while True:
     event, values = window.read()
-    stop = False
-    if event == "Exit" or event == sg.WIN_CLOSED:
+    if event == "Exit" or event == Sg.WIN_CLOSED:
         stop = True
         break
     # Folder name was filled in, make a list of files in the folder
     if event == "-FOLDER-":
-        window["-FILE LIST-"].update(readFiles(values["-FOLDER-"]))
+        window["-FILE LIST-"].update(readfiles(values["-FOLDER-"]))
         window["-TOUT-"].update('')
         window["-PLAY-"].update(disabled=True)
 
@@ -215,13 +218,14 @@ while True:
             )
             window["-TOUT-"].update(values["-FILE LIST-"][0])
             window["-PLAY-"].update(disabled=False)
-        except:
+        except IndexError:
             pass
 
-    elif event == "-PLAY-": # Play button pressed
-        window["-STOP-"].update(disabled=False)
-        window["-STATE-"].update('Playing in a few seconds.')
-        _thread.start_new_thread(playMidi,(filename,))
+    elif event == "-PLAY-":  # Play button pressed
+        if filename is not None:
+            window["-STOP-"].update(disabled=False)
+            window["-STATE-"].update('Playing in a few seconds.')
+            _thread.start_new_thread(playmidi, (filename,))
 
     elif event == "-STOP-":  # Stop button pressed
         stop = True
