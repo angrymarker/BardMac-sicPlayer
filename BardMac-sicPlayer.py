@@ -1,5 +1,6 @@
 # noinspection PyProtectedMember
 from mido import MidiFile
+import datetime
 import sys
 from time import sleep
 import pyautogui
@@ -139,23 +140,43 @@ def playmidi(midifile):
     # wait 3 seconds to switch window
     sleep(3)
     window["-STATE-"].update('Playing.')
+    window["-PROGRESS-"].update(visible=True)
     try:
+        current_time = 0
         for msg in mid.play():
             if hasattr(msg, 'velocity'):
                 # print(msg)
-                window.refresh()
                 if int(msg.velocity) > 0:
                     press(note2freq(msg.note))
+                    Sg.Print(msg.time)
+                    current_time += msg.time
+                    window["-PROGRESS-"].update_bar(current_time, mid.length)
+                    update_time(current_time, mid.length)
+                    window.refresh()
             if stop:
                 break
         window["-STATE-"].update('Stopped.')
         window["-STOP-"].update(disabled=True)
+        window["-PLAY-"].update(disabled=False)
+        window["-PROGRESS-"].update(visible=False)
+        update_time(0, 0)
     except KeyboardInterrupt:
-        print('quit')
         sys.exit()
 
 
+def update_time(cur_time, max_time):
+    if max_time > 0:
+        cur_time_delta = datetime.timedelta(seconds=cur_time)
+        max_time_delta = datetime.timedelta(seconds=max_time)
+        window['-CURTIME-'].update(str(cur_time_delta))
+        window['-MAXTIME-'].update(str(max_time_delta))
+    else:
+        window['-CURTIME-'].update('--:--')
+        window['-MAXTIME-'].update('--:--')
+
+
 # GUI
+
 Sg.theme('System Default For Real')
 
 # First the window layout in 2 columns
@@ -177,10 +198,12 @@ file_list_column = [
 image_viewer_column = [
     [Sg.Text("Selected file:")],
     [Sg.Text(size=(40, 1), key="-TOUT-")],
-    [Sg.Text('Stopped.', size=(40, 1), key="-STATE-")],
+    [Sg.Text('Stopped.', key="-STATE-"),
+     Sg.ProgressBar(0, orientation='h', key='-PROGRESS-', visible=False, size=(40, 20))],
     [
-        Sg.Button('Play !', enable_events=True, key="-PLAY-", disabled=True),
-        Sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
+        Sg.Button('▶', enable_events=True, key="-PLAY-", disabled=True),
+        Sg.Button('⏹️', enable_events=True, key="-STOP-", disabled=True),
+        Sg.Text('--:--', key="-CURTIME-"), Sg.Text(' / '), Sg.Text('--:--', key="-MAXTIME-")
     ]
 ]
 
@@ -193,7 +216,7 @@ layout = [
     ]
 ]
 
-window = Sg.Window("BardMac-sicPlayer", layout)
+window = Sg.Window("BardMac-sicPlayer", layout, finalize=True)
 
 # Run the Event Loop
 
@@ -223,6 +246,7 @@ while True:
 
     elif event == "-PLAY-":  # Play button pressed
         if filename is not None:
+            window["-PLAY-"].update(disabled=True)
             window["-STOP-"].update(disabled=False)
             window["-STATE-"].update('Playing in a few seconds.')
             _thread.start_new_thread(playmidi, (filename,))
@@ -230,6 +254,9 @@ while True:
     elif event == "-STOP-":  # Stop button pressed
         stop = True
         window["-STOP-"].update(disabled=True)
+        window["-PLAY-"].update(disabled=False)
         window["-STATE-"].update('Stopped.')
+        window["-PROGRESS-"].update(visible=False)
+        update_time(0, 0)
 
 window.close()
