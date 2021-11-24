@@ -1,3 +1,5 @@
 /.eggs
 /.idea
 /UNKNOWN.egg-info
+/dist
+/build
