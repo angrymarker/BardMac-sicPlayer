@@ -153,6 +153,7 @@ def playMidi(filename):
         sys.exit()
 
 ## GUI
+sg.theme('System Default For Real')
 
 # First the window layout in 2 columns
 
