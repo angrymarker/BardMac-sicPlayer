@@ -11,7 +11,7 @@ import PySimpleGUI as Sg
 
 pyautogui_pause = 0  # Better don't touch it and adjust min_interval
 hold_notes = True   # Experimental but works pretty great so far
-debug = True        # Displays the midi file information as it is played
+debug = False        # Displays the midi file information as it is played
 tempo = 1.0          # only used for hold_notes mode
 min_interval = 0.05  # Minimum interval between keystrokes or minimum keys hold time
 
