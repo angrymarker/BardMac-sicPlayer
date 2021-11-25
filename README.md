@@ -1,4 +1,7 @@
 # BardMac-sicPlayer
+
+<img width="790" alt="image" src="https://user-images.githubusercontent.com/73762857/143489629-aa22c63a-6ed0-4060-ba36-6f7bf53f2c41.png">
+
 Python script that plays .midi files akin to BardMusicPlayer, but for mac!
 
 Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings. 
