@@ -175,11 +175,11 @@ folder_and_options_line = [
         Sg.Text("Midi tunes folder"),
         Sg.In("", size=(40, 1), enable_events=True, key="-FOLDER-"),
         Sg.FolderBrowse(),
-        Sg.Checkbox('Hold notes', default=False, key="-HOLD NOTES-"),
+        Sg.Checkbox('Hold notes', default=False, enable_events=True, key="-HOLD NOTES-"),
         Sg.Checkbox('Debug', default=False, key="-DEBUG-"),
         Sg.Spin([x / 100.0 for x in range(0, 11, 1)], initial_value=0.05, size=4, key="-MIN INTERVAL-"),
         Sg.Text("Min interval"),
-        Sg.Spin([x / 10.0 for x in range(0, 21, 1)], initial_value=1.00, size=4, key="-TEMPO-"),
+        Sg.Spin([x / 10.0 for x in range(0, 21, 1)], initial_value=1.00, size=4, key="-TEMPO-", disabled=True),
         Sg.Text("Tempo"),
     ],
 ]
@@ -258,5 +258,8 @@ while True:
         window["-PLAY-"].update(disabled=False)
         window["-STATE-"].update('Stopped.')
         window["-PROGRESS-"].update_bar(0, 0)
+
+    elif event == "-HOLD NOTES-":
+        window["-TEMPO-"].update(disabled=not values["-HOLD NOTES-"])
 
 window.close()
