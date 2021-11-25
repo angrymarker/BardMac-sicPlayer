@@ -141,6 +141,7 @@ def play_midi(midi_file):
     # wait 3 seconds to switch window
     sleep(3)
     window["-STATE-"].update('Playing.')
+    length = mid.length
     try:
         current_time = 0
         for msg in mid.play():
@@ -153,7 +154,7 @@ def play_midi(midi_file):
             if stop:
                 break
             current_time += msg.time
-            window["-PROGRESS-"].update_bar(current_time, mid.length)
+            window["-PROGRESS-"].update_bar(current_time, length)
             window.refresh()
 
         window["-STATE-"].update('Stopped.')
@@ -238,6 +239,7 @@ while True:
             window["-PLAY-"].update(disabled=True)
             window["-STOP-"].update(disabled=False)
             window["-STATE-"].update('Playing in a few seconds.')
+            stop = False
             _thread.start_new_thread(play_midi, (filename,))
 
     elif event == "-STOP-":  # Stop button pressed
@@ -245,5 +247,6 @@ while True:
         window["-STOP-"].update(disabled=True)
         window["-PLAY-"].update(disabled=False)
         window["-STATE-"].update('Stopped.')
+        window["-PROGRESS-"].update_bar(0, 0)
 
 window.close()
