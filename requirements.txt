@@ -1,0 +1,8 @@
+modulegraph~=0.19.2
+py2app~=0.26.1
+macholib~=1.15.2
+setuptools~=57.0.0
+altgraph~=0.17.2
+PyAutoGUI~=0.9.53
+mido~=1.2.10
+PySimpleGUI~=4.55.1

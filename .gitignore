@@ -2,3 +2,5 @@
 /.idea
 /UNKNOWN.egg-info
 /requirements.txt
+/dist
+/build

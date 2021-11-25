@@ -1,14 +1,18 @@
-# noinspection PyProtectedMember
-from mido import MidiFile
 import sys
-from time import sleep
-import pyautogui
-from pyautogui import press
-import PySimpleGUI as Sg
 import os.path
 import _thread
+from time import sleep
+import mido as mi
+import pyautogui as pa
+import PySimpleGUI as Sg
 
-debug = False
+
+# Setup
+pyautogui_pause = 0  # Better don't touch it and adjust min_interval
+hold_notes = True   # Experimental but works pretty great so far
+debug = False        # Displays the midi file information as it is played
+tempo = 1.0          # only used for hold_notes mode
+min_interval = 0.05
 
 
 def note2freq(x):
@@ -131,9 +135,9 @@ def read_files(f):
 
 
 def play_midi(midi_file):
-    pyautogui.PAUSE = 0.05
+    pa.PAUSE = pyautogui_pause
     # Import the MIDI file...
-    mid = MidiFile(midi_file)
+    mid = mi.MidiFile(midi_file)
     if mid.type == 3:
         print("Unsupported type.")
         exit(3)
@@ -146,9 +150,14 @@ def play_midi(midi_file):
         current_time = 0
         for msg in mid.play():
             if hasattr(msg, 'velocity'):
-                # print(msg)
                 if int(msg.velocity) > 0:
-                    press(note2freq(msg.note))
+                    if hold_notes:
+                        pa.keyDown(note2freq(msg.note))
+                        sleep(max(msg.time, min_interval))
+                        pa.keyUp(note2freq(msg.note))
+                    else:
+                        pa.press(note2freq(msg.note))
+                        sleep(min_interval)
                     if debug:
                         Sg.Print(msg)
             if stop:
@@ -160,12 +169,12 @@ def play_midi(midi_file):
         window["-STATE-"].update('Stopped.')
         window["-STOP-"].update(disabled=True)
         window["-PLAY-"].update(disabled=False)
+        window.refresh()
     except KeyboardInterrupt:
         sys.exit()
 
 
 # GUI
-
 Sg.theme('System Default For Real')
 
 # First the window layout in 2 columns
@@ -236,10 +245,10 @@ while True:
 
     elif event == "-PLAY-":  # Play button pressed
         if filename is not None:
+            stop = False
             window["-PLAY-"].update(disabled=True)
             window["-STOP-"].update(disabled=False)
             window["-STATE-"].update('Playing in a few seconds.')
-            stop = False
             _thread.start_new_thread(play_midi, (filename,))
 
     elif event == "-STOP-":  # Stop button pressed
