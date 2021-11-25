@@ -166,7 +166,6 @@ def play_midi(midi_file):
         window["-PLAY-"].update(disabled=False)
         window.refresh()
     except KeyboardInterrupt:
-        print('quit')
         sys.exit()
 
 
