@@ -7,14 +7,6 @@ import pyautogui as pa
 import PySimpleGUI as Sg
 
 
-# Setup
-pyautogui_pause = 0  # Better don't touch it and adjust min_interval
-hold_notes = True   # Experimental but works pretty great so far
-debug = False        # Displays the midi file information as it is played
-tempo = 1.0          # only used for hold_notes mode
-min_interval = 0.05
-
-
 def note2freq(x):
     """
         Convert a MIDI note into a frequency (given in Hz)
@@ -135,12 +127,13 @@ def read_files(f):
 
 
 def play_midi(midi_file):
-    pa.PAUSE = pyautogui_pause
+    pa.PAUSE = 0
     # Import the MIDI file...
     mid = mi.MidiFile(midi_file)
     if mid.type == 3:
-        print("Unsupported type.")
-        exit(3)
+        Sg.popup("Unsupported file")
+        window["-STOP-"].click()
+        return
 
     # wait 3 seconds to switch window
     sleep(3)
@@ -149,11 +142,15 @@ def play_midi(midi_file):
     try:
         current_time = 0
         for msg in mid.play():
+            hold_notes = values["-HOLD NOTES-"]
+            debug = values["-DEBUG-"]
+            min_interval = values["-MIN INTERVAL-"]
+            tempo = values["-TEMPO-"]
             if hasattr(msg, 'velocity'):
                 if int(msg.velocity) > 0:
                     if hold_notes:
                         pa.keyDown(note2freq(msg.note))
-                        sleep(max(msg.time, min_interval))
+                        sleep(max(msg.time / tempo, min_interval / tempo, min_interval))
                         pa.keyUp(note2freq(msg.note))
                     else:
                         pa.press(note2freq(msg.note))
@@ -165,11 +162,7 @@ def play_midi(midi_file):
             current_time += msg.time
             window["-PROGRESS-"].update_bar(current_time, length)
             window.refresh()
-
-        window["-STATE-"].update('Stopped.')
-        window["-STOP-"].update(disabled=True)
-        window["-PLAY-"].update(disabled=False)
-        window.refresh()
+        window["-STOP-"].click()
     except KeyboardInterrupt:
         sys.exit()
 
@@ -177,14 +170,21 @@ def play_midi(midi_file):
 # GUI
 Sg.theme('System Default For Real')
 
-# First the window layout in 2 columns
-
-file_list_column = [
+folder_and_options_line = [
     [
         Sg.Text("Midi tunes folder"),
-        Sg.In("", size=(25, 1), enable_events=True, key="-FOLDER-"),
+        Sg.In("", size=(40, 1), enable_events=True, key="-FOLDER-"),
         Sg.FolderBrowse(),
+        Sg.Checkbox('Hold notes', default=True, key="-HOLD NOTES-"),
+        Sg.Checkbox('Debug', default=False, key="-DEBUG-"),
+        Sg.Spin([x / 100.0 for x in range(0, 11, 1)], initial_value=0.05, size=4, key="-MIN INTERVAL-"),
+        Sg.Text("Min interval"),
+        Sg.Spin([x / 10.0 for x in range(0, 21, 1)], initial_value=1.00, size=4, key="-TEMPO-"),
+        Sg.Text("Tempo"),
     ],
+]
+
+file_list_column = [
     [
         Sg.Listbox(
             values=[], enable_events=True, size=(40, 20), key="-FILE LIST-"
@@ -197,17 +197,18 @@ image_viewer_column = [
     [Sg.Text("Selected file:")],
     [Sg.Text(size=(40, 1), key="-TOUT-")],
     [
-        Sg.Text('Stopped.', key="-STATE-"),
-        Sg.ProgressBar(0, orientation='h', key='-PROGRESS-', visible=True, size=(40, 20))
+        Sg.Text('Stopped.', key="-STATE-", size=7),
+        Sg.ProgressBar(0, orientation='h', key='-PROGRESS-', visible=True, size=(45, 20))
     ],
     [
-        Sg.Button('▶️', enable_events=True, key="-PLAY-", disabled=True),
-        Sg.Button('⏹️️️', enable_events=True, key="-STOP-", disabled=True),
+        Sg.Button('Play!', enable_events=True, key="-PLAY-", disabled=True),
+        Sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
     ]
 ]
 
 # ----- Full layout -----
 layout = [
+    folder_and_options_line,
     [
         Sg.Column(file_list_column),
         Sg.VSeperator(),
@@ -228,7 +229,7 @@ while True:
         stop = True
         break
     # Folder name was filled in, make a list of files in the folder
-    if event == "-FOLDER-":
+    elif event == "-FOLDER-":
         window["-FILE LIST-"].update(read_files(values["-FOLDER-"]))
         window["-TOUT-"].update('')
         window["-PLAY-"].update(disabled=True)
