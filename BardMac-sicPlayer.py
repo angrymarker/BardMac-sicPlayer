@@ -216,7 +216,7 @@ layout = [
     ]
 ]
 
-window = Sg.Window("BardMac-sicPlayer", layout, finalize=True)
+window = Sg.Window("BardMac-sicPlayer v1.0-alpha4", layout, finalize=True)
 
 # Run the Event Loop
 
