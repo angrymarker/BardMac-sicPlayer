@@ -139,13 +139,13 @@ def play_midi(midi_file):
     sleep(3)
     window["-STATE-"].update('Playing.')
     length = mid.length
+    hold_notes = values["-HOLD NOTES-"]
+    debug = values["-DEBUG-"]
+    min_interval = values["-MIN INTERVAL-"]
+    tempo = values["-TEMPO-"]
     try:
         current_time = 0
         for msg in mid.play():
-            hold_notes = values["-HOLD NOTES-"]
-            debug = values["-DEBUG-"]
-            min_interval = values["-MIN INTERVAL-"]
-            tempo = values["-TEMPO-"]
             if hasattr(msg, 'velocity'):
                 if int(msg.velocity) > 0:
                     if hold_notes:
@@ -175,7 +175,7 @@ folder_and_options_line = [
         Sg.Text("Midi tunes folder"),
         Sg.In("", size=(40, 1), enable_events=True, key="-FOLDER-"),
         Sg.FolderBrowse(),
-        Sg.Checkbox('Hold notes', default=True, key="-HOLD NOTES-"),
+        Sg.Checkbox('Hold notes', default=False, key="-HOLD NOTES-"),
         Sg.Checkbox('Debug', default=False, key="-DEBUG-"),
         Sg.Spin([x / 100.0 for x in range(0, 11, 1)], initial_value=0.05, size=4, key="-MIN INTERVAL-"),
         Sg.Text("Min interval"),
@@ -249,7 +249,7 @@ while True:
             stop = False
             window["-PLAY-"].update(disabled=True)
             window["-STOP-"].update(disabled=False)
-            window["-STATE-"].update('Playing in a few seconds.')
+            window["-STATE-"].update('Switch')
             _thread.start_new_thread(play_midi, (filename,))
 
     elif event == "-STOP-":  # Stop button pressed
