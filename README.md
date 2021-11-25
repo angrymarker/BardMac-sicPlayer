@@ -6,7 +6,7 @@ A fork of the awesome work of @Angrymarker https://github.com/angrymarker/BardMa
 
 Python script that plays .midi files akin to BardMusicPlayer, but for mac!
 
-[DOWNLOAD HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
+➡️ [DOWNLOAD HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
 Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings in game.
 
