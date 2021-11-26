@@ -1,5 +1,5 @@
 # Copyright (C) 2021 Angrymarker & realAbitbol
-# This file is part of BardMac-sicPlayer <https://github.com/chiditarod/dogtag>.
+# This file is part of BardMac-sicPlayer <https://github.com/realAbitbol/BardMac-sicPlayer>.
 #
 # BardMac-sicPlayer is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,101 +23,104 @@ import pyautogui as pa
 import PySimpleGUI as Sg
 
 
-def note2freq(note):
-    # Converts a MIDI note into a frequency (given in Hz)
-
-    freq = round((440 / 32) * (2 ** ((note - 9) / 12)))
+def note2freq(x):
+    """
+        Convert a MIDI note into a frequency (given in Hz)
+    """
+    a = 440
+    b = (a / 32) * (2 ** ((x - 9) / 12))
+    b = round(b)
     keystroke = '\t\t keystroke "'
-
-    if freq == 1864:
+    # NOT USED -- start
+    if b == 1864:
         return 'j'
-    elif freq == 1760:
+    elif b == 1760:
         return '8'
-    elif freq == 1568:
+    elif b == 1568:
         return '5'
-    elif freq == 1397:
+    elif b == 1397:
         return '4'
-    elif freq == 1319:
+    elif b == 1319:
         return '3'
-    elif freq == 1175:
+    elif b == 1175:
         return '2'
-    elif freq == 1047:
+    elif b == 1047:
         return '8'
-    elif freq == 988:
+    elif b == 988:
         return '7'
-    elif freq == 932:
+    elif b == 932:
         return 'j'
-    elif freq == 880:
+    elif b == 880:
         return '6'
-    elif freq == 831:
+    elif b == 831:
         return 'h'
-    elif freq == 784:
+    elif b == 784:
         return '5'
-    elif freq == 740:
+    elif b == 740:
         return 'g'
-    elif freq == 698:
+    elif b == 698:
         return '4'
-    elif freq == 659:
+    elif b == 659:
         return '3'
-    elif freq == 622:
+    elif b == 622:
         return 'f'
-    elif freq == 587:
+    elif b == 587:
         return '2'
-    elif freq == 554:
+    elif b == 554:
         return 'd'
-    elif freq == 523:
+    elif b == 523:
         return '1'
-    elif freq == 494:
+    elif b == 494:
         return 't'
-    elif freq == 466:
+    elif b == 466:
         return 'c'
-    elif freq == 440:
+    elif b == 440:
         return 'r'
-    elif freq == 415:
+    elif b == 415:
         return 'x'
-    elif freq == 392:
+    elif b == 392:
         return 'e'
-    elif freq == 370:
+    elif b == 370:
         return 'z'
-    elif freq == 349:
+    elif b == 349:
         return 'w'
-    elif freq == 330:
+    elif b == 330:
         return 'q'
-    elif freq == 311:
+    elif b == 311:
         return 'l'
-    elif freq == 294:
+    elif b == 294:
         return '0'
-    elif freq == 277:
+    elif b == 277:
         return 'k'
-    elif freq == 262:
+    elif b == 262:
         return '9'
-    elif freq == 247:
+    elif b == 247:
         return 's'
-    elif freq == 233:
+    elif b == 233:
         return '.'
-    elif freq == 220:
+    elif b == 220:
         return 'a'
-    elif freq == 208:
+    elif b == 208:
         return 'm'
-    elif freq == 196:
+    elif b == 196:
         return 'p'
-    elif freq == 185:
+    elif b == 185:
         return 'n'
-    elif freq == 175:
+    elif b == 175:
         return 'o'
-    elif freq == 165:
+    elif b == 165:
         return 'i'
-    elif freq == 156:
+    elif b == 156:
         return 'b'
-    elif freq == 147:
+    elif b == 147:
         return 'u'
-    elif freq == 139:
+    elif b == 139:
         return 'v'
-    elif freq == 131:
+    elif b == 131:
         return 'y'
     else:
         keystroke += ' NOT FOUND'
-    keystroke += ', freq: ' + str(freq)
+    keystroke += ', freq: ' + str(b)
     return keystroke
 
 
@@ -205,6 +208,7 @@ file_list_column = [
     ],
 ]
 
+# For now will only show the name of the file that was chosen
 music_player_column = [
     [Sg.Text("Selected file:")],
     [Sg.Text(size=(40, 1), key="-TOUT-")],
@@ -219,7 +223,7 @@ music_player_column = [
     [Sg.Button('Keybindings', enable_events=True, key="-KEYBINDINGS-")]
 ]
 
-# Full layout
+# ----- Full layout -----
 layout = [
     folder_and_options_line,
     [
@@ -231,7 +235,8 @@ layout = [
 
 window = Sg.Window("BardMac-sicPlayer v1.0-alpha4", layout, finalize=True)
 
-# Event Loop
+# Run the Event Loop
+
 stop = False
 filename = None
 
@@ -240,8 +245,8 @@ while True:
     if event == "Exit" or event == Sg.WIN_CLOSED:
         stop = True
         break
-
-    elif event == "-FOLDER-":  # Folder name was changed, fill the files list
+    # Folder name was filled in, make a list of files in the folder
+    elif event == "-FOLDER-":
         window["-FILE LIST-"].update(read_files(values["-FOLDER-"]))
         window["-TOUT-"].update('')
         window["-PLAY-"].update(disabled=True)
@@ -271,10 +276,9 @@ while True:
         window["-STATE-"].update('Stopped.')
         window["-PROGRESS-"].update_bar(0, 0)
 
-    elif event == "-HOLD NOTES-":  # Hold notes checkbox modified
+    elif event == "-HOLD NOTES-":
         window["-TEMPO-"].update(disabled=not values["-HOLD NOTES-"])
-
-    elif event == "-KEYBINDINGS-":  # Keybindings button pressed
+    elif event == "-KEYBINDINGS-":
         Sg.popup_annoying(title="Keybindings", image='resources/keybindings.png')
 
 window.close()
