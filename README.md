@@ -1,9 +1,19 @@
 # BardMac-sicPlayer
+
+A fork of the awesome work of @Angrymarker https://github.com/angrymarker/BardMac-sicPlayer with some cool things like improved playback and a GUI
+
+<img width="790" alt="image" src="https://user-images.githubusercontent.com/73762857/143489629-aa22c63a-6ed0-4060-ba36-6f7bf53f2c41.png">
+
 Python script that plays .midi files akin to BardMusicPlayer, but for mac!
 
-Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings. 
+➡️ [DOWNLOAD HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
-To run: 
+Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings in game.
+
+---
+## For developpers
+
+### To run: 
 
 install python3
 
@@ -17,11 +27,11 @@ install python3-tkinter
 
 ensure keybindings are set as per bardmusicplayer settings
 
-to run:
+In game :
 open up bard perform mode in FFXIV with instrument of choice.
 
 run cmd line:
-  python3 BardMac-sicPlayer.py "path/To/MidiFile/song.midi" 
+  python3 BardMac-sicPlayer.py
 
 Switch back to FFXIV in performance mode, and rock out
 
@@ -49,6 +59,7 @@ And brew install python3-tkinter
 The last line needs homebrew which you can get here : https://brew.sh/
   
 ---
+## Building binaries
 
 To make this a standalone install py2app with "pip3 install py2app" and then run "python3 setup.py py2app"
   
