@@ -1,3 +1,19 @@
+# Copyright (C) 2021 Angrymarker & realAbitbol
+# This file is part of BardMac-sicPlayer <https://github.com/chiditarod/dogtag>.
+#
+# BardMac-sicPlayer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# BardMac-sicPlayer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with BardMac-sicPlayer.  If not, see <http://www.gnu.org/licenses/>.
+
 import sys
 import os.path
 import _thread
@@ -7,104 +23,101 @@ import pyautogui as pa
 import PySimpleGUI as Sg
 
 
-def note2freq(x):
-    """
-        Convert a MIDI note into a frequency (given in Hz)
-    """
-    a = 440
-    b = (a / 32) * (2 ** ((x - 9) / 12))
-    b = round(b)
+def note2freq(note):
+    # Converts a MIDI note into a frequency (given in Hz)
+
+    freq = round((440 / 32) * (2 ** ((note - 9) / 12)))
     keystroke = '\t\t keystroke "'
-    # NOT USED -- start
-    if b == 1864:
+
+    if freq == 1864:
         return 'j'
-    elif b == 1760:
+    elif freq == 1760:
         return '8'
-    elif b == 1568:
+    elif freq == 1568:
         return '5'
-    elif b == 1397:
+    elif freq == 1397:
         return '4'
-    elif b == 1319:
+    elif freq == 1319:
         return '3'
-    elif b == 1175:
+    elif freq == 1175:
         return '2'
-    elif b == 1047:
+    elif freq == 1047:
         return '8'
-    elif b == 988:
+    elif freq == 988:
         return '7'
-    elif b == 932:
+    elif freq == 932:
         return 'j'
-    elif b == 880:
+    elif freq == 880:
         return '6'
-    elif b == 831:
+    elif freq == 831:
         return 'h'
-    elif b == 784:
+    elif freq == 784:
         return '5'
-    elif b == 740:
+    elif freq == 740:
         return 'g'
-    elif b == 698:
+    elif freq == 698:
         return '4'
-    elif b == 659:
+    elif freq == 659:
         return '3'
-    elif b == 622:
+    elif freq == 622:
         return 'f'
-    elif b == 587:
+    elif freq == 587:
         return '2'
-    elif b == 554:
+    elif freq == 554:
         return 'd'
-    elif b == 523:
+    elif freq == 523:
         return '1'
-    elif b == 494:
+    elif freq == 494:
         return 't'
-    elif b == 466:
+    elif freq == 466:
         return 'c'
-    elif b == 440:
+    elif freq == 440:
         return 'r'
-    elif b == 415:
+    elif freq == 415:
         return 'x'
-    elif b == 392:
+    elif freq == 392:
         return 'e'
-    elif b == 370:
+    elif freq == 370:
         return 'z'
-    elif b == 349:
+    elif freq == 349:
         return 'w'
-    elif b == 330:
+    elif freq == 330:
         return 'q'
-    elif b == 311:
+    elif freq == 311:
         return 'l'
-    elif b == 294:
+    elif freq == 294:
         return '0'
-    elif b == 277:
+    elif freq == 277:
         return 'k'
-    elif b == 262:
+    elif freq == 262:
         return '9'
-    elif b == 247:
+    elif freq == 247:
         return 's'
-    elif b == 233:
+    elif freq == 233:
         return '.'
-    elif b == 220:
+    elif freq == 220:
         return 'a'
-    elif b == 208:
+    elif freq == 208:
         return 'm'
-    elif b == 196:
+    elif freq == 196:
         return 'p'
-    elif b == 185:
+    elif freq == 185:
         return 'n'
-    elif b == 175:
+    elif freq == 175:
         return 'o'
-    elif b == 165:
+    elif freq == 165:
         return 'i'
-    elif b == 156:
+    elif freq == 156:
         return 'b'
-    elif b == 147:
+    elif freq == 147:
         return 'u'
-    elif b == 139:
+    elif freq == 139:
         return 'v'
-    elif b == 131:
+    elif freq == 131:
         return 'y'
     else:
         keystroke += ' NOT FOUND'
-    keystroke += ', freq: ' + str(b)
+    keystroke += ', freq: ' + str(freq)
     return keystroke
 
 
@@ -192,7 +205,6 @@ file_list_column = [
     ],
 ]
 
-# For now will only show the name of the file that was chosen
 music_player_column = [
     [Sg.Text("Selected file:")],
     [Sg.Text(size=(40, 1), key="-TOUT-")],
@@ -207,7 +219,7 @@ music_player_column = [
     [Sg.Button('Keybindings', enable_events=True, key="-KEYBINDINGS-")]
 ]
 
-# ----- Full layout -----
+# Full layout
 layout = [
     folder_and_options_line,
     [
@@ -219,8 +231,7 @@ layout = [
 
 window = Sg.Window("BardMac-sicPlayer v1.0-alpha4", layout, finalize=True)
 
-# Run the Event Loop
-
+# Event Loop
 stop = False
 filename = None
 
@@ -229,8 +240,8 @@ while True:
     if event == "Exit" or event == Sg.WIN_CLOSED:
         stop = True
         break
-    # Folder name was filled in, make a list of files in the folder
-    elif event == "-FOLDER-":
+
+    elif event == "-FOLDER-":  # Folder name was changed, fill the files list
         window["-FILE LIST-"].update(read_files(values["-FOLDER-"]))
         window["-TOUT-"].update('')
         window["-PLAY-"].update(disabled=True)
@@ -260,9 +271,10 @@ while True:
         window["-STATE-"].update('Stopped.')
         window["-PROGRESS-"].update_bar(0, 0)
 
-    elif event == "-HOLD NOTES-":
+    elif event == "-HOLD NOTES-":  # Hold notes checkbox modified
         window["-TEMPO-"].update(disabled=not values["-HOLD NOTES-"])
-    elif event == "-KEYBINDINGS-":
+
+    elif event == "-KEYBINDINGS-":  # Keybindings button pressed
         Sg.popup_annoying(title="Keybindings", image='resources/keybindings.png')
 
 window.close()
