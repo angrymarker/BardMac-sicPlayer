@@ -193,7 +193,7 @@ file_list_column = [
 ]
 
 # For now will only show the name of the file that was chosen
-image_viewer_column = [
+music_player_column = [
     [Sg.Text("Selected file:")],
     [Sg.Text(size=(40, 1), key="-TOUT-")],
     [
@@ -203,7 +203,8 @@ image_viewer_column = [
     [
         Sg.Button('Play!', enable_events=True, key="-PLAY-", disabled=True),
         Sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
-    ]
+    ],
+    [Sg.Button('Keybindings', enable_events=True, key="-KEYBINDINGS-")]
 ]
 
 # ----- Full layout -----
@@ -212,7 +213,7 @@ layout = [
     [
         Sg.Column(file_list_column),
         Sg.VSeperator(),
-        Sg.Column(image_viewer_column),
+        Sg.Column(music_player_column),
     ]
 ]
 
@@ -261,5 +262,7 @@ while True:
 
     elif event == "-HOLD NOTES-":
         window["-TEMPO-"].update(disabled=not values["-HOLD NOTES-"])
+    elif event == "-KEYBINDINGS-":
+        Sg.popup_annoying(title="Keybindings", image='resources/keybindings.png')
 
 window.close()

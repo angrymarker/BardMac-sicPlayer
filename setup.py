@@ -9,7 +9,7 @@ from setuptools import setup
 
 APP = ['BardMac-sicPlayer.py']
 DATA_FILES = []
-OPTIONS = {'iconfile': 'bard.icns'}
+OPTIONS = {'iconfile': 'resources/bard.icns'}
 
 setup(
     app=APP,
