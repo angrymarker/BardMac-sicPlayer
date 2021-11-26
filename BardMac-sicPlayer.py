@@ -144,7 +144,7 @@ def read_files(f):
 
 def play_midi(midi_file):
     pa.PAUSE = 0
-    # Import the MIDI file...
+    # Import the MIDI file
     mid = mi.MidiFile(midi_file)
     if mid.type == 3:
         Sg.popup("Unsupported file")
@@ -153,6 +153,7 @@ def play_midi(midi_file):
 
     # wait 3 seconds to switch window
     sleep(3)
+
     window["-STATE-"].update('Playing.')
     length = mid.length
     hold_notes = values["-HOLD NOTES-"]
