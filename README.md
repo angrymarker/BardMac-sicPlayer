@@ -28,6 +28,10 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
 - Music doesnt play at all:
   - Make sure FF14 is your active window
   - Give the program accessibility permissions if MacOS, sowehow, didn't already ask you for them by going to System Settings > Security and confidentiality > Accessibility > press the + button and select the tool app
+ 
+ ### Need help ?
+ 
+ Just file an issue [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/issues) I'll do my best to help you.
 
 ---
 ## For developpers
