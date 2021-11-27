@@ -1,4 +1,4 @@
-# 🎵 BardMac-sicPlayer 🎵
+# 🎵 BardMac-sicPlayer 🍎
 
 A fork of the awesome work of @Angrymarker https://github.com/angrymarker/BardMac-sicPlayer with some cool things like improved playback and a GUI
 
