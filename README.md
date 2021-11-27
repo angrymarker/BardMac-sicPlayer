@@ -17,9 +17,9 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
 - Tempo: Only for hold notes mode, modifies the keystrokes durations thus speeding or slowing down playback.
 
 ### Usage
-- Browse to a folder containing the mid files you want to play
-- Select a song
 - In game open up bard perform mode with your instrument of choice
+- On BardMac-sicPlayer, browse to a folder containing the mid files you want to play
+- Select a song
 - Press play
 - Within 3 seconds set ff14 as your active window by clicking on it
 
