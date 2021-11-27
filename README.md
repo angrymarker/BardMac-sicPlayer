@@ -68,3 +68,7 @@ To make this a standalone install py2app with pip and then run in terminal:
 ```bash
 python3 setup.py py2app
 ```  
+
+### 🧑‍💻 👩‍💻 Want to help?
+
+Welcoming all pull requests!
