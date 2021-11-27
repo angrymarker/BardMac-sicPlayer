@@ -47,14 +47,14 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
 
 ### ▶️ Running the script
 
-This is a Python3 script with the following dependancies:
-- mido: midi handling library, install it with pip
+This is a [Python3](https://www.python.org/downloads/) script with the following dependancies:
+- [mido](https://pypi.org/project/mido/): midi handling library, install it with pip
 
-- pyautogui: automation library, install it with pip 
+- [pyautogui](https://pypi.org/project/PyAutoGUI/): automation library, install it with pip 
 
-- pysimplegui: GUI making library, install it with pip
+- [pysimplegui](https://pypi.org/project/PySimpleGUI/): GUI making library, install it with pip
 
-- python3-tkinter: tkinter support for python, needed by pysimplegui, install it with [Homebrew](https://brew.sh/)
+- [python-tk](https://formulae.brew.sh/formula/python-tk@3.9): tkinter support for python, needed by pysimplegui, install it with [Homebrew 🍺](https://brew.sh/)
 
 Then run in terminal:
 
