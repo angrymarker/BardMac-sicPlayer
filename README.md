@@ -54,7 +54,7 @@ You can get some (mostly) compatible midis on the excellent Bard Music Player Mi
 
 ### ▶️ Running the script
 
-This is a [Python3](https://www.python.org/downloads/) script with the following dependancies:
+This is a [Python3](https://www.python.org/downloads/) script with the following dependencies:
 - [mido](https://pypi.org/project/mido/) : midi handling library, install it with pip.
 
 - [pyautogui](https://pypi.org/project/PyAutoGUI/) : automation library, install it with pip.
