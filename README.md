@@ -26,7 +26,7 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
 - Music partially plays: set the performance mode keybinds as expected by the tool (press the Keybindings button for reference)
 - Music doesnt play at all:
   - Make sure FF14 is your active window
-  - Give the program accessibility permissions if MAcOS, sowehow, didn't already ask you for them by going to System Settings > Security and confidentiality > Accessibility > press the + button and select the tool app
+  - Give the program accessibility permissions if MacOS, sowehow, didn't already ask you for them by going to System Settings > Security and confidentiality > Accessibility > press the + button and select the tool app
 
 ---
 ## For developpers
