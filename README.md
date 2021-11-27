@@ -8,9 +8,13 @@ A bard performance music player for MacOS !
 
 ![image](https://user-images.githubusercontent.com/73762857/143688878-c73c6488-fa56-4fa2-85b0-674b670c245b.png)
 
+---
+
 ### 💾 Download
 
 ➡️ Every release can be found [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
+
+---
 
 ### 🎹 Usage
 - Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings in game.
@@ -43,6 +47,7 @@ A bard performance music player for MacOS !
  Let's discuss it [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/discussions)
 
 ---
+
 ## 🤖 For developpers
 
 ### ▶️ Running the script
