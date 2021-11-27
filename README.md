@@ -21,7 +21,7 @@ You can get some (mostly) compatible midis on the excellent Bard Music Player Mi
 ### 🎹 Usage
 - Click the Keybindings button to see the required key bindings in performance mode in game.
 - In game, open up bard perform mode with your instrument of choice.
-- On BardMac-sicPlayer, browse to a folder containing the mid files you want to play.
+- On BardMac-sicPlayer, browse to a folder containing the midi files you want to play.
 - Select a song.
 - Press Play.
 - Within 3 seconds set ff14 as your active window by clicking on it.
