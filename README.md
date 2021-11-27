@@ -57,9 +57,14 @@ This is a Python3 script with the following dependancies:
 - python3-tkinter: tkinter support for python, needed by pysimplegui, install it with [Homebrew](https://brew.sh/)
 
 Then run in terminal:
-  python3 BardMac-sicPlayer.py
+
+```bash
+python3 BardMac-sicPlayer.py
+```
 
 ### 📦 Building binaries
 
-To make this a standalone install py2app with pip and then run "python3 setup.py py2app"
-  
+To make this a standalone install py2app with pip and then run in terminal:
+```bash
+python3 setup.py py2app
+```  
