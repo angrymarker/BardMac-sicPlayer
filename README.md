@@ -44,7 +44,7 @@ You can get some (mostly) compatible midis on the excellent Bard Music Player Mi
 
  I'll do my best to help you.
  
- ### 📈 An idea ? A suggestion ?
+ ### 💡 An idea ? A suggestion ?
  
  Let's discuss it [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/discussions).
 
