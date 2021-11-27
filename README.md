@@ -17,7 +17,7 @@ Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sic
 ---
 
 ### 🎹 Usage
-- Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings in game.
+- Click the Keybindings button to see the required key bindings in performance mode in game.
 - In game, open up bard perform mode with your instrument of choice
 - On BardMac-sicPlayer, browse to a folder containing the mid files you want to play
 - Select a song
