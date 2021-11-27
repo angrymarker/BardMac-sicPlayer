@@ -12,7 +12,7 @@ A bard performance music player for MacOS !
 
 ### 💾 Download
 
-➡️ Every release can be found [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
+Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
 ---
 
