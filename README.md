@@ -31,7 +31,9 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
  
  ### 🆘 Need help ?
  
- Just file an issue [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/issues) I'll do my best to help you.
+ Just file an issue [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/issues).
+
+ I'll do my best to help you.
  
  ### 📈 An idea ? A suggestion ?
  
