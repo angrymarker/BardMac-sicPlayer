@@ -22,6 +22,8 @@ import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
 
+version = "BardMac-sicPlayer v1.0-alpha5"
+
 
 def note2freq(x):
     """
@@ -234,7 +236,7 @@ layout = [
     ]
 ]
 
-window = Sg.Window("BardMac-sicPlayer v1.0-alpha4", layout, finalize=True)
+window = Sg.Window(version, layout, finalize=True)
 
 # Run the Event Loop
 
