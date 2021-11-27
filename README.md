@@ -44,69 +44,21 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
 ---
 ## For developpers
 
-### To run: 
+### Running the script
 
-install python3
+This is a Python3 script with the following dependancies:
+- mido: midi handling library, install it with pip
 
-install python module mido 
+- pyautogui: automation library, install it with pip 
 
-install python module pyautogui
+- pysimplegui: GUI making library, install it with pip
 
-install pysimplegui
+- python3-tkinter: tkinter support for python, needed by pysimplegui, install it with [Homebrew](https://brew.sh/)
 
-install python3-tkinter
-
-ensure keybindings are set as per bardmusicplayer settings
-
-In game :
-open up bard perform mode in FFXIV with instrument of choice.
-
-run cmd line:
+Then run in terminal:
   python3 BardMac-sicPlayer.py
 
-Switch back to FFXIV in performance mode, and rock out
+### Building binaries
 
-Playing will start after a 3 second delay to let you switch your active window back to ff14.
-
-
-If you have issues installing python3, reddit user a5920 wrote up a guide that worked for them:
-
-Install python3 for mac Mac by typing python3 in terminal
-
-Install command line developer tools from the popup
-
-Download https://bootstrap.pypa.io/get-pip.py, 
-
-Type python3 <drag get-pip.py here> in terminal, 
+To make this a standalone install py2app with pip and then run "python3 setup.py py2app"
   
-Then python3 -m pip install mido 
-  
-And python3 -m pip install pyautogui
-  
-And python3 -m pip install pysimplegui
-  
-And brew install python3-tkinter
-  
-The last line needs homebrew which you can get here : https://brew.sh/
-  
----
-## Building binaries
-
-To make this a standalone install py2app with "pip3 install py2app" and then run "python3 setup.py py2app"
-  
-If you want to try a compiled version just download it here https://github.com/realAbitbol/BardMac-sicPlayer/releases
-  
-Important : 
-  
-Give application accessibility permissions in
-  
-System settings > Security and privacy > Accessibility
-  
-Click the "+" on the bottom and add the application.
-
-Double check it's checked.
-  
-  
-It works on my system but I currently have no idea if it works on a system where the dependancies aren't already installed.
-  
-Please let me know !
