@@ -42,9 +42,9 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
  Let's discuss it [HERE](https://github.com/realAbitbol/BardMac-sicPlayer/discussions)
 
 ---
-## For developpers
+## 🤖 For developpers
 
-### Running the script
+### ▶️ Running the script
 
 This is a Python3 script with the following dependancies:
 - mido: midi handling library, install it with pip
@@ -58,7 +58,7 @@ This is a Python3 script with the following dependancies:
 Then run in terminal:
   python3 BardMac-sicPlayer.py
 
-### Building binaries
+### 📦 Building binaries
 
 To make this a standalone install py2app with pip and then run "python3 setup.py py2app"
   
