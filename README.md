@@ -10,18 +10,18 @@ Python script that plays .midi files akin to BardMusicPlayer, but for mac!
 
 Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings in game.
 
-### ⚙️ Options
-- Hold Notes : new experimental playback mode that hold keys the right time. Works better with some mid files, works strange with some others.
-- Debug: Show debug window
-- Min interval : minimum interval between two keystrokes. 0.05 seems to be a sweet spot. Set this too low and you might experience some missed keystrokes if you don't have a perfect framerate.
-- Tempo: Only for hold notes mode, modifies the keystrokes durations thus speeding or slowing down playback.
-
 ### 🎹 Usage
 - In game open up bard perform mode with your instrument of choice
 - On BardMac-sicPlayer, browse to a folder containing the mid files you want to play
 - Select a song
 - Press play
 - Within 3 seconds set ff14 as your active window by clicking on it
+
+### ⚙️ Options
+- Hold Notes : new experimental playback mode that hold keys the right time. Works better with some mid files, works strange with some others.
+- Debug: Show debug window
+- Min interval : minimum interval between two keystrokes. 0.05 seems to be a sweet spot. Set this too low and you might experience some missed keystrokes if you don't have a perfect framerate.
+- Tempo: Only for hold notes mode, modifies the keystrokes durations thus speeding or slowing down playback.
 
 ### 🔧 Troubleshooting
 - Music partially plays: set the performance mode keybinds as expected by the tool (press the Keybindings button for reference)
