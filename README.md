@@ -13,6 +13,7 @@ A fork of the awesome work of @Angrymarker https://github.com/angrymarker/BardMa
 Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings in game.
 
 ### 🎹 Usage
+- Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindings in game.
 - In game open up bard perform mode with your instrument of choice
 - On BardMac-sicPlayer, browse to a folder containing the mid files you want to play
 - Select a song
