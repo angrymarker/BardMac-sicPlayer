@@ -19,6 +19,7 @@ Refer to the graphic https://bardmusicplayer.com/perf_settings.png for key bindi
 ### Usage
 - Browse to a folder containing the mid files you want to play
 - Select a song
+- In game open up bard perform mode with your instrument of choice
 - Press play
 - Within 3 seconds set ff14 as your active window by clicking on it
 
