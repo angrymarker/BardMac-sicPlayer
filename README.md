@@ -71,7 +71,7 @@ python3 BardMac-sicPlayer.py
 
 ### 📦 Building binaries
 
-To make this a standalone install py2app with pip and then run in terminal :
+To make this a standalone install [py2app](https://pypi.org/project/py2app/) with pip and then run in terminal :
 ```bash
 python3 setup.py py2app
 ```  
