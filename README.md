@@ -12,6 +12,13 @@ A bard performance music player for MacOS !
 
 ### 💾 Download
 
+Last version : [💾v1.0-alpha6](https://github.com/realAbitbol/BardMac-sicPlayer/releases/download/v1.0-alpha6/BardMac-sicPlayer.app.zip)
+
+Changelog :
+- Nicer UI
+- Improved playback
+- Countdown to start
+
 Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
 You can get some (mostly) compatible midis on the excellent Bard Music Player Midi Library 👉[HERE](https://songs.bardmusicplayer.com)
