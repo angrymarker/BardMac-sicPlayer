@@ -16,12 +16,12 @@
 
 import sys
 import os.path
-from time import sleep
+import time as ti
 import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
 
-version = "BardMac-sicPlayer v1.0-alpha7"
+version = "BardMac-sicPlayer v1.0-alpha8"
 
 
 def note2freq(x):
@@ -150,40 +150,34 @@ def play_midi(midi_file):
 
     # wait 3 seconds to switch window
     window["-STATE-"].update('in 3s')
-    sleep(1)
+    ti.sleep(1)
     window["-STATE-"].update('in 2s')
-    sleep(1)
+    ti.sleep(1)
     window["-STATE-"].update('in 1s')
-    sleep(1)
+    ti.sleep(1)
 
     window["-STATE-"].update('Playing.')
     length = mid.length
-    hold_notes = values["-HOLD NOTES-"]
     debug = values["-DEBUG-"]
     min_interval = values["-MIN INTERVAL-"]
-    tempo = values["-TEMPO-"]
+
     try:
-        current_time = 0
+        start_time = ti.time()
         for msg in mid.play():
-            time = 0
             if hasattr(msg, 'velocity'):
                 if int(msg.velocity) > 0:
                     time = msg.time
-                    note = msg.note
-                    if hold_notes:
-                        pa.keyDown(note2freq(note))
-                        sleep(max(time / tempo, min_interval / tempo, min_interval))
-                        pa.keyUp(note2freq(note))
-                    else:
-                        pa.press(note2freq(note))
-                        sleep(min_interval)
+                    pa.press(note2freq(msg.note))
+                    ti.sleep(min_interval)
+
+                    if time > 0:
+                        window["-PROGRESS-"].update_bar(round(ti.time()-start_time), length)
+
                     if debug:
                         Sg.Print(msg)
+
             if stop:
                 break
-            if time > 0:
-                current_time += time
-                window["-PROGRESS-"].update_bar(current_time, length)
     except KeyboardInterrupt:
         sys.exit()
 
@@ -196,12 +190,9 @@ folder_and_options_line = [
         Sg.Text("Midi tunes folder"),
         Sg.In("", size=(40, 1), enable_events=True, key="-FOLDER-"),
         Sg.FolderBrowse(),
-        Sg.Checkbox('Hold notes', default=False, enable_events=True, key="-HOLD NOTES-"),
         Sg.Checkbox('Debug', default=False, key="-DEBUG-"),
         Sg.Spin([x / 100.0 for x in range(0, 11, 1)], initial_value=0.05, size=4, key="-MIN INTERVAL-"),
         Sg.Text("Min interval"),
-        Sg.Spin([x / 10.0 for x in range(0, 21, 1)], initial_value=1.00, size=4, key="-TEMPO-", disabled=True),
-        Sg.Text("Tempo"),
     ],
 ]
 
@@ -283,8 +274,6 @@ while True:
         window["-STATE-"].update('Stopped.')
         window["-PROGRESS-"].update_bar(0, 0)
 
-    elif event == "-HOLD NOTES-":
-        window["-TEMPO-"].update(disabled=not values["-HOLD NOTES-"])
     elif event == "-KEYBINDINGS-":
         Sg.popup_annoying(title="Keybindings", image='resources/keybindings.png')
 

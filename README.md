@@ -7,21 +7,19 @@ A bard performance music player for MacOS !
 *A fork of the awesome work of **@Angrymarker** https://github.com/angrymarker/BardMac-sicPlayer with some cool things like improved playback and a GUI*
 
 ![image](https://user-images.githubusercontent.com/73762857/143764596-7e3d01b6-9a9f-4fd6-bbca-fcea3c2f7362.png)
-
 ---
 
 ### 💾 Download
 
-Latest version : [💾 v1.0-alpha7](https://github.com/realAbitbol/BardMac-sicPlayer/releases/download/v1.0-alpha7/BardMac-sicPlayer.app.zip)
+Latest version : [💾 v1.0-alpha8](https://github.com/realAbitbol/BardMac-sicPlayer/releases/download/v1.0-alpha8/BardMac-sicPlayer.app.zip)
 
 Changelog :
-- Nicer UI
+- Slightly nicer UI
 - Improved playback
 - Countdown to start
-- Faster
-
-Known issues :
-- Progress bar is pretty broken at the moment. Probably something linked to the new threading code, investigating. 
+- Optimizations
+- Fixed progressbar
+- Removed the hold_notes and tempo option (didn't work correctly, might be readded at a later time)
 
 Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
@@ -38,10 +36,8 @@ Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sic
 - Within 3 seconds set ff14 as your active window by clicking on it.
 
 ### ⚙️ Options
-- Hold Notes : new experimental playback mode that hold keys the right time. Works better with some mid files, works strange with some others.
 - Debug : Shows debug window.
 - Min interval : minimum interval between two keystrokes. 0.05 seems to be a sweet spot. Set this too low and you might experience some missed keystrokes if you don't have a perfect framerate.
-- Tempo : Only for hold notes mode, modifies the keystrokes durations thus speeding or slowing down playback.
 
 ### 🔧 Troubleshooting
 - Music partially plays : set the performance mode keybinds as expected by the tool (press the Keybindings button for reference)
