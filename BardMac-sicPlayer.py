@@ -21,7 +21,7 @@ import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
 
-version = "BardMac-sicPlayer v1.0"
+version = "BardMac-sicPlayer v1.0.1"
 
 
 def note2freq(x):
@@ -172,8 +172,7 @@ def play_midi(midi_file):
                         ti.sleep(max(0, min_interval-elapsed_time))
                     pa.press(note2freq(msg.note))
                     last_time = ti.time()
-                    if True: # msg.time > 0:
-                        window["-PROGRESS-"].update_bar(round(ti.time()-start_time), length)
+                    window["-PROGRESS-"].update_bar(round(ti.time()-start_time), length)
 
                     if debug:
                         Sg.Print(elapsed_time)
@@ -192,9 +191,11 @@ folder_and_options_line = [
         Sg.Text("Midi tunes folder"),
         Sg.In("", size=(40, 1), enable_events=True, key="-FOLDER-"),
         Sg.FolderBrowse(),
-        Sg.Checkbox('Debug', default=False, key="-DEBUG-"),
-        Sg.Spin([x / 100.0 for x in range(0, 11, 1)], initial_value=0.05, size=4, key="-MIN INTERVAL-"),
-        Sg.Text("Min interval"),
+        Sg.Checkbox('Debug', default=False, key="-DEBUG-", tooltip="Shows the debug window displaying Midi messages"),
+        Sg.Spin([x / 100.0 for x in range(0, 11, 1)], initial_value=0.05, size=4, key="-MIN INTERVAL-",
+                tooltip="Lower is more accurate but you might miss some notes unless you have a perfect frame-rate"),
+        Sg.Text("Min interval",
+                tooltip="Lower is more accurate but you might miss some notes unless you have a perfect frame-rate"),
     ],
 ]
 
@@ -218,7 +219,8 @@ music_player_column = [
         Sg.Button('Play!', enable_events=True, key="-PLAY-", disabled=True),
         Sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
     ],
-    Sg.vbottom([Sg.Button('Keybindings', enable_events=True, key="-KEYBINDINGS-")])
+    Sg.vbottom([Sg.Button('Keybindings', enable_events=True, key="-KEYBINDINGS-",
+                          tooltip="Displays the required keybindings")])
 ]
 
 # ----- Full layout -----

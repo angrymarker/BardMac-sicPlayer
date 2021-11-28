@@ -13,7 +13,7 @@ A bard performance music player for MacOS !
 
 ### 💾 Download
 
-Latest version : [💾 v1.0](https://github.com/realAbitbol/BardMac-sicPlayer/releases/download/v1.0/BardMac-sicPlayer.app.zip)
+Latest version : [💾 v1.0.1](https://github.com/realAbitbol/BardMac-sicPlayer/releases/download/v1.0.1/BardMac-sicPlayer.app.zip)
 
 Changelog :
 - Slightly nicer UI
@@ -21,8 +21,9 @@ Changelog :
 - Countdown to start
 - Optimizations
 - Fixed progressbar
-- Removed the hold_notes and tempo option (didn't work correctly, might be readded at a later time)
+- Removed the hold_notes and tempo option (can't be correctly implemented because Final fantasy XIV doesn't allow several keys to be pressed simultaneously)
 - More accurate min interval
+- Tooltips
 
 Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
