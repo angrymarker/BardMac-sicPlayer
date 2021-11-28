@@ -2,12 +2,11 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/realAbitbol/BardMac-sicPlayer/graphs/commit-activity) [![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
-A bard performance music player for MacOS !
+A Final Fantasy XIV bard performance music player for MacOS !
 
 *A fork of the awesome work of **@Angrymarker** https://github.com/angrymarker/BardMac-sicPlayer with some cool things like improved playback and a GUI*
 
-![image](https://user-images.githubusercontent.com/73762857/143772494-7d998104-2032-4ad3-b3ce-5c672bc84c76.png)
-
+![image](https://user-images.githubusercontent.com/73762857/143773724-be1924b9-9cde-4c97-987c-d22f0320d574.png)
 
 ---
 
