@@ -20,6 +20,9 @@ Changelog :
 - Countdown to start
 - Faster
 
+Known issues :
+- Progress bar is pretty broken at the moment. Probably something linked to the new threading code, investigating. 
+
 Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
 You can get some (mostly) compatible midis on the excellent Bard Music Player Midi Library 👉[HERE](https://songs.bardmusicplayer.com)
