@@ -22,7 +22,7 @@ Changelog :
 
 Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sicPlayer/releases)
 
-You can get some (mostly) compatible midis on the excellent Bard Music Player Midi Library 👉[HERE](https://songs.bardmusicplayer.com)
+🎵 Midi tunes : You can get some (mostly) compatible midis on the excellent [Bard Music Player](https://bardmusicplayer.com) Midi Library 👉[HERE](https://songs.bardmusicplayer.com)
 
 ---
 
