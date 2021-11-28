@@ -22,16 +22,13 @@ import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
 
-version = "BardMac-sicPlayer v1.0-alpha5"
+version = "BardMac-sicPlayer v1.0-alpha6"
 
 
 def note2freq(x):
-    """
-        Convert a MIDI note into a frequency (given in Hz)
-    """
-    a = 440
-    b = (a / 32) * (2 ** ((x - 9) / 12))
-    b = round(b)
+    # Converts a note to a frequency and returns the correct keybinding to press
+
+    b = round((440 / 32) * (2 ** ((x - 9) / 12)))
     keystroke = '\t\t keystroke "'
     # NOT USED -- start
     if b == 1864:
@@ -154,7 +151,12 @@ def play_midi(midi_file):
         return
 
     # wait 3 seconds to switch window
-    sleep(3)
+    window["-STATE-"].update('in 3s')
+    sleep(1)
+    window["-STATE-"].update('in 2s')
+    sleep(1)
+    window["-STATE-"].update('in 1s')
+    sleep(1)
 
     window["-STATE-"].update('Playing.')
     length = mid.length
@@ -165,21 +167,25 @@ def play_midi(midi_file):
     try:
         current_time = 0
         for msg in mid.play():
+            time = 0
             if hasattr(msg, 'velocity'):
                 if int(msg.velocity) > 0:
+                    time = msg.time
+                    note = msg.note
                     if hold_notes:
-                        pa.keyDown(note2freq(msg.note))
-                        sleep(max(msg.time / tempo, min_interval / tempo, min_interval))
-                        pa.keyUp(note2freq(msg.note))
+                        pa.keyDown(note2freq(note))
+                        sleep(max(time / tempo, min_interval / tempo, min_interval))
+                        pa.keyUp(note2freq(note))
                     else:
-                        pa.press(note2freq(msg.note))
+                        pa.press(note2freq(note))
                         sleep(min_interval)
                     if debug:
                         Sg.Print(msg)
             if stop:
                 break
-            current_time += msg.time
-            window["-PROGRESS-"].update_bar(current_time, length)
+            if time > 0:
+                current_time += time
+                window["-PROGRESS-"].update_bar(current_time, length)
             window.refresh()
         window["-STOP-"].click()
     except KeyboardInterrupt:
@@ -223,7 +229,7 @@ music_player_column = [
         Sg.Button('Play!', enable_events=True, key="-PLAY-", disabled=True),
         Sg.Button('Stop', enable_events=True, key="-STOP-", disabled=True),
     ],
-    [Sg.Button('Keybindings', enable_events=True, key="-KEYBINDINGS-")]
+    Sg.vbottom([Sg.Button('Keybindings', enable_events=True, key="-KEYBINDINGS-")])
 ]
 
 # ----- Full layout -----
@@ -232,7 +238,7 @@ layout = [
     [
         Sg.Column(file_list_column),
         Sg.VSeperator(),
-        Sg.Column(music_player_column),
+        Sg.Column(music_player_column, vertical_alignment='t'),
     ]
 ]
 
