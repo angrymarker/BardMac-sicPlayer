@@ -20,8 +20,10 @@ import time as ti
 import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
+from pathlib import Path
 
-version = "BardMac-sicPlayer v1.0.1"
+version = "BardMac-sicPlayer v1.0.2"
+last_folder_path = os.path.join(Path.home(), ".bardmac")
 
 
 def note2freq(x):
@@ -122,18 +124,17 @@ def note2freq(x):
     return keystroke
 
 
-def read_files(f):
-    folder = f
+def read_files(selected_folder):
     try:
         # Get list of files in folder
-        file_list = os.listdir(folder)
+        file_list = os.listdir(selected_folder)
     except OSError:
         file_list = []
 
     file_names = [
         f
         for f in file_list
-        if os.path.isfile(os.path.join(folder, f))
+        if os.path.isfile(os.path.join(selected_folder, f))
         and f.lower().endswith((".mid", ".midi"))
     ]
     file_names.sort()
@@ -181,6 +182,12 @@ def play_midi(midi_file):
                 break
     except KeyboardInterrupt:
         sys.exit()
+
+
+def update_file_list(selected_folder):
+    window["-FILE LIST-"].update(read_files(selected_folder))
+    window["-TOUT-"].update('')
+    window["-PLAY-"].update(disabled=True)
 
 
 # GUI
@@ -234,6 +241,13 @@ layout = [
 ]
 
 window = Sg.Window(version, layout, finalize=True)
+try:
+    with open(last_folder_path, "r") as last_folder:
+        folder = last_folder.readline()
+        window["-FOLDER-"].update(folder)
+        update_file_list(folder)
+except FileNotFoundError:
+    pass
 
 # Run the Event Loop
 
@@ -247,9 +261,9 @@ while True:
         break
     # Folder name was filled in, make a list of files in the folder
     elif event == "-FOLDER-":
-        window["-FILE LIST-"].update(read_files(values["-FOLDER-"]))
-        window["-TOUT-"].update('')
-        window["-PLAY-"].update(disabled=True)
+        update_file_list(values["-FOLDER-"])
+        with open(last_folder_path, "w") as last_folder:
+            last_folder.write(values["-FOLDER-"])
 
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
