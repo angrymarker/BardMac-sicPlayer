@@ -21,7 +21,7 @@ import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
 
-version = "BardMac-sicPlayer v1.0-alpha9"
+version = "BardMac-sicPlayer v1.0"
 
 
 def note2freq(x):
