@@ -16,13 +16,12 @@
 
 import sys
 import os.path
-import _thread
 from time import sleep
 import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
 
-version = "BardMac-sicPlayer v1.0-alpha6"
+version = "BardMac-sicPlayer v1.0-alpha7"
 
 
 def note2freq(x):
@@ -147,7 +146,6 @@ def play_midi(midi_file):
     mid = mi.MidiFile(midi_file)
     if mid.type == 3:
         Sg.popup("Unsupported file")
-        window["-STOP-"].click()
         return
 
     # wait 3 seconds to switch window
@@ -186,8 +184,6 @@ def play_midi(midi_file):
             if time > 0:
                 current_time += time
                 window["-PROGRESS-"].update_bar(current_time, length)
-            window.refresh()
-        window["-STOP-"].click()
     except KeyboardInterrupt:
         sys.exit()
 
@@ -276,7 +272,9 @@ while True:
             window["-PLAY-"].update(disabled=True)
             window["-STOP-"].update(disabled=False)
             window["-STATE-"].update('Switch')
-            _thread.start_new_thread(play_midi, (filename,))
+            window.perform_long_operation(lambda:
+                                          play_midi(filename),
+                                          '-STOP-')
 
     elif event == "-STOP-":  # Stop button pressed
         stop = True
