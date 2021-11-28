@@ -21,7 +21,7 @@ import mido as mi
 import pyautogui as pa
 import PySimpleGUI as Sg
 
-version = "BardMac-sicPlayer v1.0-alpha8"
+version = "BardMac-sicPlayer v1.0-alpha9"
 
 
 def note2freq(x):
@@ -163,18 +163,20 @@ def play_midi(midi_file):
 
     try:
         start_time = ti.time()
+        last_time = ti.time()
         for msg in mid.play():
             if hasattr(msg, 'velocity'):
                 if int(msg.velocity) > 0:
-                    time = msg.time
+                    elapsed_time = ti.time() - last_time
+                    if elapsed_time < min_interval:
+                        ti.sleep(max(0, min_interval-elapsed_time))
                     pa.press(note2freq(msg.note))
-                    ti.sleep(min_interval)
-
-                    if time > 0:
+                    last_time = ti.time()
+                    if True: # msg.time > 0:
                         window["-PROGRESS-"].update_bar(round(ti.time()-start_time), length)
 
                     if debug:
-                        Sg.Print(msg)
+                        Sg.Print(elapsed_time)
 
             if stop:
                 break
