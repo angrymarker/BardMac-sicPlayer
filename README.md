@@ -2,7 +2,7 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/realAbitbol/BardMac-sicPlayer/graphs/commit-activity) [![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
-A Final Fantasy XIV bard performance music player for MacOS !
+A Final Fantasy XIV bard performance music player for macOS !
 
 *A fork of the awesome work of **@Angrymarker** https://github.com/angrymarker/BardMac-sicPlayer with some cool things like improved playback and a GUI*
 
@@ -41,13 +41,13 @@ Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sic
 
 ### ⚙️ Options
 - Debug : Shows debug window.
-- Min interval : minimum interval between two keystrokes. 0.05 seems to be a sweet spot. Set this too low and you might experience some missed keystrokes if you don't have a perfect framerate.
+- Min interval : minimum interval between two keystrokes. 0.05 seems to be a sweet spot. Set this too low, and you might experience some missed keystrokes if you don't have a perfect frame-rate.
 
 ### 🔧 Troubleshooting
-- Music partially plays : set the performance mode keybinds as expected by the tool (press the Keybindings button for reference)
-- Music doesnt play at all :
+- Music partially plays : set the performance mode keybindings as expected by the tool (press the Keybindings button for reference)
+- Music doesn't play at all :
   - Make sure FF14 is your active window.
-  - Give the program accessibility permissions if MacOS, sowehow, didn't already ask you for them by going to System Settings > Security and confidentiality > Accessibility > press the + button and select the app.
+  - Give the program accessibility permissions if macOS, somehow, didn't already ask you for them by going to System Settings > Security and confidentiality > Accessibility > press the + button and select the app.
  
  ### 🆘 Need help ?
  
@@ -61,7 +61,7 @@ Every release can be found 👉[HERE](https://github.com/realAbitbol/BardMac-sic
 
 ---
 
-## 🤖 For developpers
+## 🤖 For developers
 
 ### ▶️ Running the script
 
