@@ -6,7 +6,7 @@ A bard performance music player for MacOS !
 
 *A fork of the awesome work of **@Angrymarker** https://github.com/angrymarker/BardMac-sicPlayer with some cool things like improved playback and a GUI*
 
-![image](https://user-images.githubusercontent.com/73762857/143688878-c73c6488-fa56-4fa2-85b0-674b670c245b.png)
+![image](https://user-images.githubusercontent.com/73762857/143764596-7e3d01b6-9a9f-4fd6-bbca-fcea3c2f7362.png)
 
 ---
 
